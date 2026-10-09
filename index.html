@@ -98,11 +98,16 @@ opencode</pre></div>
   <section>
     <h2><span class="n">3</span>Lase OpenCode'il MCP-serverid lisada</h2>
     <p>Kopeeri see viip OpenCode'i ja vajuta Enter.</p>
-    <div class="block prompt"><pre>Add three MCP servers to my global OpenCode config file (opencode.json). Keep all existing settings.
-1) "estonian": type "remote", url "https://estonian-mcp.fly.dev/mcp"
-2) "arxiv": type "local", command ["uvx", "arxiv-mcp-server"], timeout 60000
-3) "paper-search": type "local", command ["uvx", "--with", "mcp&lt;2", "paper-search-mcp"], timeout 60000
-If the uvx command is missing, install uv. When you are done, show me the file contents and tell me where the file is.</pre></div>
+    <div class="block prompt"><pre>Install these three MCP servers in OpenCode. Read each GitHub README first, then add the servers to my global OpenCode config file (opencode.json). Keep all existing settings.
+
+1) Estonian MCP: https://github.com/silly-geese/estonian-mcp
+   "estonian": type "remote", url "https://estonian-mcp.fly.dev/mcp"
+2) arXiv MCP: https://github.com/blazickjp/arxiv-mcp-server
+   "arxiv": type "local", command ["uvx", "arxiv-mcp-server"], timeout 60000
+3) Paper Search MCP: https://github.com/openags/paper-search-mcp
+   "paper-search": type "local", command ["uvx", "--with", "mcp&lt;2", "paper-search-mcp"], timeout 60000
+
+Keep "mcp&lt;2": the current paper-search-mcp release does not start with mcp 2.x. If the uvx command is missing, install uv. When you are done, show me the file contents and tell me where the file is.</pre></div>
     <p class="note">Seejärel sulge OpenCode käsuga <code>/exit</code> ja käivita uuesti. Esimene käivitus võib võtta kuni minuti, sest uvx laadib serverid alla.</p>
     <details>
       <summary>Käsitsi lisamine</summary>
