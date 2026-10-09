@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenCode teadustööks</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg: #f6f5f1;
+  --surface: #ecebe5;
+  --fg: #17191c;
+  --muted: #555a62;
+  --line: #d9d7cf;
+  --accent: #2b59c3;
+  --sans: 'Public Sans', Arial, sans-serif;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #15171a; --surface: #202328; --fg: #ecebe6; --muted: #a3a8b0; --line: #30343a; --accent: #8aa8f0; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 var(--sans); }
+.wrap { max-width: 46rem; margin: 0 auto; padding-inline: 20px; padding-block: 48px 72px; display: flex; flex-direction: column; gap: 48px; }
+header { display: flex; flex-direction: column; gap: 8px; }
+h1 { font-size: 2rem; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.25rem; margin: 0; display: flex; gap: 12px; align-items: baseline; }
+h2 .n { color: var(--accent); font-variant-numeric: tabular-nums; }
+h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 0; }
+p { margin: 0; }
+.lead, .note { color: var(--muted); }
+.note { font-size: 0.92rem; }
+section { display: flex; flex-direction: column; gap: 16px; }
+.group { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 640px) { .cols { grid-template-columns: 1fr; } }
+.block { position: relative; background: var(--surface); border-radius: 8px; min-width: 0; }
+.block pre { margin: 0; padding: 14px 16px; padding-right: 84px; overflow-x: auto; font: 0.86rem/1.6 var(--mono); white-space: pre; }
+.block.prompt pre { font: 0.95rem/1.55 var(--sans); white-space: pre-wrap; }
+.copy {
+  position: absolute; top: 8px; right: 8px; font: 600 0.78rem var(--sans); color: var(--accent);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; cursor: pointer;
+}
+.copy:hover { border-color: var(--accent); }
+.copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code { font: 0.88em var(--mono); background: var(--surface); padding: 1px 5px; border-radius: 4px; }
+details { border-top: 1px solid var(--line); padding-top: 12px; }
+summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+details[open] summary { margin-bottom: 12px; }
+ul { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 6px; }
+a { color: var(--accent); }
+.links { list-style: none; padding: 0; display: grid; gap: 6px; }
+.links li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 12px; }
+.links a { overflow-wrap: anywhere; }
+@media (max-width: 480px) { .links li { grid-template-columns: 1fr; gap: 0; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <h1>OpenCode teadustööks</h1>
+    <p class="lead">Paigaldus, MCP-serverid ja näidisviibad. Iga ploki saab kopeerida nupuga. Nurksulgudes osad asenda oma andmetega.</p>
+  </header>
+
+  <section>
+    <h2><span class="n">1</span>Paigalda OpenCode ja uv</h2>
+    <div class="cols">
+      <div class="group">
+        <h3>macOS · Terminal</h3>
+        <div class="block"><pre>curl -fsSL https://opencode.ai/install | bash</pre></div>
+        <div class="block"><pre>curl -LsSf https://astral.sh/uv/install.sh | sh</pre></div>
+        <p class="note">Homebrew'ga: <code>brew install anomalyco/tap/opencode</code></p>
+      </div>
+      <div class="group">
+        <h3>Windows · PowerShell</h3>
+        <div class="block"><pre>npm install -g opencode-ai</pre></div>
+        <div class="block"><pre>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</pre></div>
+        <p class="note">npm vajab Node.js-i (<a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>). Scoopiga: <code>scoop install opencode</code></p>
+      </div>
+    </div>
+    <p class="note">uv on Pythoni tööriist, millega käivituvad arXivi ja Paper Searchi serverid. Pärast paigaldust sulge terminal ja ava uuesti.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">2</span>Käivita</h2>
+    <div class="block"><pre>mkdir uurimistoo
+cd uurimistoo
+opencode</pre></div>
+    <p class="note">Tasuta mudelid on kohe olemas. Mudeli vahetamiseks kirjuta <code>/models</code>.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">3</span>Lase OpenCode'il MCP-serverid lisada</h2>
+    <p>Kopeeri see viip OpenCode'i ja vajuta Enter.</p>
+    <div class="block prompt"><pre>Add three MCP servers to my global OpenCode config file (opencode.json). Keep all existing settings.
+1) "estonian": type "remote", url "https://estonian-mcp.fly.dev/mcp"
+2) "arxiv": type "local", command ["uvx", "arxiv-mcp-server"], timeout 60000
+3) "paper-search": type "local", command ["uvx", "--with", "mcp&lt;2", "paper-search-mcp"], timeout 60000
+If the uvx command is missing, install uv. When you are done, show me the file contents and tell me where the file is.</pre></div>
+    <p class="note">Seejärel sulge OpenCode käsuga <code>/exit</code> ja käivita uuesti. Esimene käivitus võib võtta kuni minuti, sest uvx laadib serverid alla.</p>
+    <details>
+      <summary>Käsitsi lisamine</summary>
+      <div class="group">
+        <p class="note">Fail: macOS-is <code>~/.config/opencode/opencode.json</code>. Teine võimalus on panna <code>opencode.json</code> kausta, kus OpenCode'i käivitad (töötab ka Windowsis).</p>
+        <div class="block"><pre>{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "estonian": {
+      "type": "remote",
+      "url": "https://estonian-mcp.fly.dev/mcp"
+    },
+    "arxiv": {
+      "type": "local",
+      "command": ["uvx", "arxiv-mcp-server"],
+      "timeout": 60000
+    },
+    "paper-search": {
+      "type": "local",
+      "command": ["uvx", "--with", "mcp&lt;2", "paper-search-mcp"],
+      "timeout": 60000
+    }
+  }
+}</pre></div>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2><span class="n">4</span>Kontrolli</h2>
+    <div class="block prompt"><pre>Which MCP servers can you see? List the tools of each server.</pre></div>
+    <p class="note">Terminalis: <code>opencode mcp list</code>. Kõik kolm serverit peavad olema ühendatud.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">5</span>Näidisviibad</h2>
+    <div class="group">
+      <h3>Kirjanduse otsing</h3>
+      <div class="block prompt"><pre>Use paper-search to find papers on [topic] published in 2022–2026. List the 10 most relevant: title, authors, year, DOI and one sentence on the research question. Use only data returned by the tools. If a DOI is missing, write "no DOI".</pre></div>
+      <div class="block prompt"><pre>Search arXiv for preprints on [topic] from the last 12 months. Group them by method and give the arXiv ID of each paper.</pre></div>
+    </div>
+    <div class="group">
+      <h3>Artikli lugemine</h3>
+      <div class="block prompt"><pre>Download arXiv paper [arXiv ID] and describe its method, dataset and main results. For each claim, name the section it comes from.</pre></div>
+      <div class="block prompt"><pre>Compare papers [ID 1] and [ID 2]: research question, data, method and results. Present the comparison as a table.</pre></div>
+      <div class="block prompt"><pre>Show the citation graph of arXiv paper [arXiv ID]: which works does it build on, and which works cite it?</pre></div>
+      <div class="block prompt"><pre>Save the papers found in this conversation to a BibTeX file named references.bib.</pre></div>
+    </div>
+    <div class="group">
+      <h3>Eesti keel</h3>
+      <div class="block prompt"><pre>Use the estonian server to check the spelling and punctuation of this Estonian text. Give the rule for each correction. Do not change the content.
+
+[text]</pre></div>
+      <div class="block prompt"><pre>Translate this English abstract into Estonian. Check the spelling and case forms of the translation with the estonian server.
+
+[text]</pre></div>
+      <div class="block prompt"><pre>Find officialese (kantseliit) in this Estonian text and suggest simpler wording.
+
+[text]</pre></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">6</span>Enne kui viite töösse paned</h2>
+    <ul>
+      <li>Ava iga viide ja kontrolli DOI-d.</li>
+      <li>Loe olulised kohad artiklist ise üle. Mudel võib kokkuvõttes eksida ka siis, kui artikkel on olemas.</li>
+      <li>Ära sisesta avaldamata käsikirju ega isikuandmeid. Tasuta mudelite pakkujad võivad sisestatud andmeid salvestada.</li>
+      <li>Paper Searchis on ka Sci-Hubi tööriist. Ära seda kasuta.</li>
+      <li>Järgi oma ülikooli tehisaru kasutamise juhendit ja märgi töös, milliseid tööriistu kasutasid.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="n">7</span>Lingid</h2>
+    <ul class="links">
+      <li><span>OpenCode</span><a href="https://opencode.ai" target="_blank" rel="noopener">opencode.ai</a></li>
+      <li><span>Eesti MCP</span><a href="https://github.com/silly-geese/estonian-mcp" target="_blank" rel="noopener">github.com/silly-geese/estonian-mcp</a></li>
+      <li><span>arXiv MCP</span><a href="https://github.com/blazickjp/arxiv-mcp-server" target="_blank" rel="noopener">github.com/blazickjp/arxiv-mcp-server</a></li>
+      <li><span>Paper Search MCP</span><a href="https://github.com/openags/paper-search-mcp" target="_blank" rel="noopener">github.com/openags/paper-search-mcp</a></li>
+      <li><span>uv</span><a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener">docs.astral.sh/uv</a></li>
+    </ul>
+  </section>
+</main>
+
+<script>
+document.querySelectorAll('.block').forEach(function (block) {
+  var pre = block.querySelector('pre');
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'copy';
+  btn.textContent = 'Kopeeri';
+  btn.addEventListener('click', function () {
+    var text = pre.textContent;
+    var done = function () { btn.textContent = 'Kopeeritud'; setTimeout(function () { btn.textContent = 'Kopeeri'; }, 1500); };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(pre);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Vajuta Ctrl+C';
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+  });
+  block.appendChild(btn);
+});
+</script>
+</body>
+</html>
