@@ -65,21 +65,26 @@ a { color: var(--accent); }
 
   <section>
     <h2><span class="n">1</span>Paigalda OpenCode ja uv</h2>
+    <p>Midagi muud pole vaja eelnevalt paigaldada. Kopeeri käsud ükshaaval ja vajuta pärast igaüht Enter.</p>
     <div class="cols">
       <div class="group">
         <h3>macOS · Terminal</h3>
+        <p class="note">Ava Terminal: ⌘ + tühik, kirjuta „Terminal“.</p>
         <div class="block"><pre>curl -fsSL https://opencode.ai/install | bash</pre></div>
         <div class="block"><pre>curl -LsSf https://astral.sh/uv/install.sh | sh</pre></div>
-        <p class="note">Homebrew'ga: <code>brew install anomalyco/tap/opencode</code></p>
       </div>
       <div class="group">
         <h3>Windows · PowerShell</h3>
-        <div class="block"><pre>npm install -g opencode-ai</pre></div>
-        <div class="block"><pre>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</pre></div>
-        <p class="note">npm vajab Node.js-i (<a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>). Scoopiga: <code>scoop install opencode</code></p>
+        <p class="note">Ava PowerShell: Start-menüü, kirjuta „PowerShell“.</p>
+        <div class="block"><pre>winget install --id SST.opencode -e --accept-source-agreements --accept-package-agreements</pre></div>
+        <div class="block"><pre>winget install --id astral-sh.uv -e --accept-source-agreements --accept-package-agreements</pre></div>
+        <p class="note">winget on Windows 10 ja 11 juba olemas. Kui käsku winget ei leita, paigalda Microsoft Store'ist „App Installer“.</p>
       </div>
     </div>
-    <p class="note">uv on Pythoni tööriist, millega käivituvad arXivi ja Paper Searchi serverid. Pärast paigaldust sulge terminal ja ava uuesti.</p>
+    <p>Sulge terminal, ava uus ja kontrolli. Mõlemad käsud peavad näitama versiooninumbrit.</p>
+    <div class="block"><pre>opencode --version
+uvx --version</pre></div>
+    <p class="note">Kui tuleb „command not found“ või „ei tuvastatud“, on terminal jäänud uuesti avamata. uv on Pythoni tööriist, millega käivituvad arXivi ja Paper Searchi serverid. Pythonit pole vaja eraldi paigaldada.</p>
   </section>
 
   <section>
